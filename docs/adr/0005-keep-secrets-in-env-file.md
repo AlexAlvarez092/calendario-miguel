@@ -1,4 +1,4 @@
-# ADR 0005: Keep secrets in an `.env` file loaded by systemd
+# ADR 0005: Keep secrets in an `.env` file
 
 - **Status:** Proposed
 - **Date:** 2026-11-13
@@ -9,7 +9,11 @@ The bot needs secrets: the Telegram bot token, the Gemini API key, the GitHub cr
 
 ## Decision
 
-Secrets live in an `.env` file on the Raspberry Pi, outside the repository, readable only by the bot user (permissions `600`) and loaded by the systemd service through `EnvironmentFile`.
+Secrets live in an `.env` file in the bot directory on the Raspberry Pi, outside the repository, readable only by the bot user (permissions `600`) and loaded by the bot code at startup. This is how the bot already works on the Raspberry Pi.
+
+## Alternatives considered
+
+- **`EnvironmentFile` in the systemd unit:** slightly cleaner, but it requires changing a working setup and editing the unit with `sudo` for no functional gain.
 
 ## Consequences
 

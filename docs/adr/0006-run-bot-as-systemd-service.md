@@ -9,7 +9,7 @@
 
 ## Decision
 
-The bot runs as a **systemd service** with `Restart=always`, enabled at boot, loading its secrets from the `.env` file ([ADR 0005](0005-keep-secrets-in-env-file.md)).
+The bot runs as a **systemd service** with `Restart=on-failure`, enabled at boot, loading its secrets from the `.env` file ([ADR 0005](0005-keep-secrets-in-env-file.md)). This is how the existing bot already runs on the Raspberry Pi.
 
 ## Consequences
 
