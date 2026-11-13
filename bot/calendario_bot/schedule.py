@@ -97,6 +97,16 @@ def _next_month(year: int, month: int) -> Tuple[int, int]:
     return (year + 1, 1) if month == 12 else (year, month + 1)
 
 
+def apply_pedido(reading: DayReading) -> DayReading:
+    """FR-016: `PEDIDO` in a cell takes precedence over the shift: the day is requested off."""
+    if re.search(r"pedid", reading.raw_text, re.IGNORECASE):
+        return DayReading(
+            reading.day, reading.raw_text, "non_working", off_type="Vacaciones",
+            ignored=[reading.raw_text], uncertain=reading.uncertain,
+        )
+    return reading
+
+
 def analyze(days: List[DayReading], year: int, month: int) -> Analysis:
     """Give a date to each day read and classify it. The photo covers consecutive days
     in reading order, starting in the given month; the month changes when the day number
@@ -104,7 +114,7 @@ def analyze(days: List[DayReading], year: int, month: int) -> Analysis:
     grouped: Dict[date, List[DayReading]] = {}
     missing: List[date] = []
     previous: Optional[int] = None
-    for reading in days:
+    for reading in map(apply_pedido, days):
         last = _days_in_month(year, month)
         if previous is not None and reading.day < previous:
             if previous < 28 or reading.day > 7:

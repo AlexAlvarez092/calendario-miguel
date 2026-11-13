@@ -44,11 +44,11 @@ def test_existing_events_file_round_trips():
 
 def test_understood_shift_and_ignored_annotation():
     assert is_understood(shift(1, "10-18", time(10), time(18)))
-    assert is_understood(shift(1, "10-18 PEDIDO", time(10), time(18), ["PEDIDO"]))
+    assert is_understood(shift(1, "10-18 HT", time(10), time(18), ["HT"]))
 
 
 def test_not_understood_cases():
-    assert not is_understood(shift(1, "10-18 PEDIDO", time(10), time(18)))  # annotation not declared
+    assert not is_understood(shift(1, "10-18 HT", time(10), time(18)))  # annotation not declared
     assert not is_understood(shift(1, "10-18", time(18), time(10)))  # reversed order
     assert not is_understood(shift(1, "10-18", time(10), time(18), uncertain=True))
     assert not is_understood(DayReading(1, "debido 02-11", "unknown"))
@@ -104,3 +104,10 @@ def test_analyze_year_rollover():
 def test_analyze_incoherent_order_is_an_error():
     assert analyze([shift(10, "10-18", time(10), time(18)), shift(5, "10-18", time(10), time(18))], 2026, 11).error
     assert analyze([shift(31, "10-18", time(10), time(18))], 2026, 11).error  # November has 30 days
+
+
+def test_pedido_takes_precedence_over_shift():
+    result = analyze([shift(3, "10-18 PEDIDO", time(10), time(18))], 2026, 10)
+    reading = result.understood[d(3, 10)]
+    assert reading.kind == "non_working" and reading.off_type == "Vacaciones"
+    assert result.unclear == []

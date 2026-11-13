@@ -47,9 +47,8 @@ async def press(flow, reply, label):
 
 async def pick_shift(flow, kind_reply, start, end):
     reply = await press(flow, kind_reply, "Turno")
-    for hour, minute in (start, end):
+    for hour in (start, end):
         reply = await press(flow, reply, "%02d" % hour)
-        reply = await press(flow, reply, "%02d" % minute)
     return reply
 
 
@@ -88,11 +87,11 @@ async def test_clarification_of_unclear_and_missing_days(tmp_path):
     flow, store, _ = make_flow(tmp_path, FakeReader(ReadResult(11, 2026, days)))
     reply = (await flow.start_photo(b"x", "image/jpeg"))[0]
     assert "02/11/2026" in reply.text and "debido 02-11" in reply.text
-    reply = await pick_shift(flow, reply, (9, 0), (17, 30))
+    reply = await pick_shift(flow, reply, 9, 17)
     assert "03/11/2026" in reply.text  # the missing day is asked next
     kind = await press(flow, reply, "Día no laborable")
     summary = await press(flow, kind, "Descanso")
-    assert "Turno 09:00-17:30" in summary.text and "Descanso" in summary.text
+    assert "Turno 09:00-17:00" in summary.text and "Descanso" in summary.text
     await flow.handle_callback(button(summary, "Confirmar"))
     assert len(store.load()) == 4
 
@@ -148,7 +147,7 @@ async def test_add_shift_with_replace_question(tmp_path):
     question = await press(flow, picker, "5")
     assert "reemplazar" in question.text
     kind = await press(flow, question, "Sí, reemplazar")
-    summary = await pick_shift(flow, kind, (18, 0), (2, 0))
+    summary = await pick_shift(flow, kind, 18, 2)
     assert "Turno 18:00-02:00" in summary.text and "antes: Descanso" in summary.text
     await flow.handle_callback(button(summary, "Confirmar"))
     assert store.load()[date(2026, 11, 5)] == Entry.shift(date(2026, 11, 5), time(18), time(2))
@@ -166,10 +165,8 @@ async def test_end_time_equal_to_start_is_asked_again(tmp_path):
     flow, _, _ = make_flow(tmp_path)
     kind = await press(flow, flow.start_command("add"), "10")
     reply = await press(flow, kind, "Turno")
-    for label in ("08", "00"):
-        reply = await press(flow, reply, label)
     reply = await press(flow, reply, "08")
-    reply = await press(flow, reply, "00")
+    reply = await press(flow, reply, "08")
     assert "igual" in reply.text and flow.current.step == "hour"
 
 

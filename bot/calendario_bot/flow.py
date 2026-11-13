@@ -22,7 +22,6 @@ MONTH_NAMES = (
     "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre",
 )
 WEEKDAYS = ("L", "M", "X", "J", "V", "S", "D")
-MINUTES = (0, 15, 30, 45)
 MENU_PREFIX = "m"
 
 Button = Tuple[str, str]  # (label, callback data)
@@ -124,11 +123,6 @@ class Flow:
         it.data["which"] = which
         buttons = [("%02d" % h, self._cb(it, "hour", str(h))) for h in range(24)]
         return self._reply(it, text, [buttons[i : i + 6] for i in range(0, 24, 6)])
-
-    def _minute_picker(self, it: Interaction) -> Reply:
-        it.step = "minute"
-        row = [("%02d" % m, self._cb(it, "min", str(m))) for m in MINUTES]
-        return self._reply(it, f"Hora: {it.data['hour']:02d}. ¿Y los minutos?", [row])
 
     def _kind_picker(self, it: Interaction, text: str) -> Reply:
         it.step = "kind"
@@ -338,13 +332,7 @@ class Flow:
     async def _on_hour(self, it: Interaction, action: str, arg: str) -> List[Reply]:
         if action != "hour":
             return []
-        it.data["hour"] = int(arg)
-        return [self._minute_picker(it)]
-
-    async def _on_minute(self, it: Interaction, action: str, arg: str) -> List[Reply]:
-        if action != "min":
-            return []
-        chosen = time(it.data["hour"], int(arg))
+        chosen = time(int(arg), 0)
         if it.data["which"] == "start":
             it.data["start"] = chosen
             return [self._hour_picker(it, "end", f"Empieza a las {chosen:%H:%M}. ¿A qué hora termina?")]

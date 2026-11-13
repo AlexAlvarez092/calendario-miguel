@@ -35,7 +35,7 @@ For each day return:
 - "kind": "shift" if the cell is a start-end time such as 10-18 or 18-02; "non_working" if the cell marks a day without work (for example DESCANSO or VACACIONES); "unknown" for anything else. A cell with other words, such as "debido 02-11", is "unknown".
 - "start" and "end": the shift times as "HH:MM" in 24 hours (16-00 ends at "00:00"), or null when it is not a shift.
 - "non_working_type": the printed marker of a non-working day, or null.
-- "ignored_annotations": annotations printed in the cell that do not change whether Miguel works or the times of the shift (for example PEDIDO, HT, INV HORA).
+- "ignored_annotations": annotations printed in the cell that do not change whether Miguel works or the times of the shift (for example HT, INV HORA). Do NOT list PEDIDO here: keep it in "raw_text" only.
 - "uncertain": true if you are not sure about this cell.
 
 Answer only with JSON: {"month": 1-12 or null, "year": 4 digits or null, "days": [...]}"""
