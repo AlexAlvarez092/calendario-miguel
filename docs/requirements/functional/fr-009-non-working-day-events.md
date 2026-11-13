@@ -3,7 +3,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-Non-working days (rest days, holidays, vacation, compensatory days, etc.) also generate their own calendar event. The title of the event is the type of non-working day (for example, rest or vacation).
+Non-working days (rest days, holidays, vacation, compensatory days, requested days (`PEDIDO`), etc.) also generate their own calendar event. The title of the event is the type of non-working day (for example, rest or vacation).
 
 ## Acceptance criteria
 

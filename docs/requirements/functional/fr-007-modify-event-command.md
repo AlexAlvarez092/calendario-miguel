@@ -8,7 +8,7 @@ The bot provides a command to modify the event of a day (for example, when a col
 1. Miguel invokes the command from the bot's menu or with the `/modify` command.
 2. Miguel indicates the day to modify by choosing it in a calendar of buttons ([FR-026](fr-026-interaction-with-buttons.md)). If that day has no event, the bot tells him to use the add command instead.
 3. Miguel indicates whether that day is a shift or a non-working day.
-4. If it is a shift, Miguel chooses the start time and the end time with buttons. Otherwise, the bot asks for the type of non-working day, offering buttons (rest, vacation, holiday, compensatory) or free text ([FR-009](fr-009-non-working-day-events.md)).
+4. If it is a shift, Miguel chooses the start time and the end time with buttons. Otherwise, the bot asks for the type of non-working day, offering buttons (rest, vacation, holiday, compensatory, requested) or free text ([FR-009](fr-009-non-working-day-events.md)).
 
 The event of that day is updated according to Miguel's answers.
 

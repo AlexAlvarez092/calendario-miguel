@@ -109,5 +109,5 @@ def test_analyze_incoherent_order_is_an_error():
 def test_pedido_takes_precedence_over_shift():
     result = analyze([shift(3, "10-18 PEDIDO", time(10), time(18))], 2026, 10)
     reading = result.understood[d(3, 10)]
-    assert reading.kind == "non_working" and reading.off_type == "Vacaciones"
+    assert reading.kind == "non_working" and reading.off_type == "Pedido"
     assert result.unclear == []

@@ -9,7 +9,7 @@ from typing import Dict, List, Optional, Tuple
 
 from .events import Entry
 
-NON_WORKING_TYPES = ("Descanso", "Vacaciones", "Festivo", "Compensatorio")
+NON_WORKING_TYPES = ("Descanso", "Vacaciones", "Festivo", "Compensatorio", "Pedido")
 
 _RANGE_RE = re.compile(r"(\d{1,2})(?::(\d{2}))?\s*[-–—]\s*(\d{1,2})(?::(\d{2}))?")
 _TIME_RE = re.compile(r"^(\d{1,2})(?::(\d{2}))?$")
@@ -77,7 +77,7 @@ def is_understood(reading: DayReading) -> bool:
         return _leftover(rest, reading.ignored) == ""
     if not reading.off_type:
         return False
-    return _leftover(reading.raw_text, [reading.off_type] + reading.ignored) == ""
+    return _leftover(reading.raw_text, reading.ignored + [reading.off_type]) == ""
 
 
 @dataclass
@@ -98,10 +98,10 @@ def _next_month(year: int, month: int) -> Tuple[int, int]:
 
 
 def apply_pedido(reading: DayReading) -> DayReading:
-    """FR-016: `PEDIDO` in a cell takes precedence over the shift: the day is requested off."""
+    """FR-016: `PEDIDO` in a cell takes precedence over the shift: the day was requested off."""
     if re.search(r"pedid", reading.raw_text, re.IGNORECASE):
         return DayReading(
-            reading.day, reading.raw_text, "non_working", off_type="Vacaciones",
+            reading.day, reading.raw_text, "non_working", off_type="Pedido",
             ignored=[reading.raw_text], uncertain=reading.uncertain,
         )
     return reading

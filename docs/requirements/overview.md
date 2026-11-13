@@ -34,5 +34,5 @@ Periodically Miguel receives, via WhatsApp, a photo of a printed calendar with h
 | Term | Definition |
 |------|------------|
 | Shift | A work period of a day, with a start time and an end time. It may end after midnight. |
-| Non-working day | A day without a shift: rest day, holiday, vacation, compensatory day, etc. |
+| Non-working day | A day without a shift: rest day, holiday, vacation, compensatory day, requested day (`PEDIDO`), etc. |
 | Event | The calendar entry of a day, either a shift or a non-working day. |
