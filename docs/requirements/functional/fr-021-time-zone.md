@@ -1,7 +1,7 @@
 # FR-021: Time zone
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 All shift times are in the `Europe/Madrid` time zone. Local times that do not exist or happen twice on a clock change night are not handled specially: the time zone library resolves them.
 

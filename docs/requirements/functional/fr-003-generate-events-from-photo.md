@@ -1,7 +1,7 @@
 # FR-003: Generate events from the photo
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 From the photo, the bot extracts the shifts and generates the calendar events without further manual steps, apart from the clarifications of [FR-004](fr-004-clarify-unclear-shifts.md) and the confirmation of [FR-022](fr-022-confirm-before-publishing.md).
 

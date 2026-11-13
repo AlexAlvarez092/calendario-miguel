@@ -1,6 +1,6 @@
 # ADR 0006: Run the bot as a systemd service
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

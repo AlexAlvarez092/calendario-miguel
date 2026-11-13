@@ -1,7 +1,7 @@
 # FR-009: Non-working day events
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Non-working days (rest days, holidays, vacation, compensatory days, requested days (`PEDIDO`), etc.) also generate their own calendar event. The title of the event is the type of non-working day (for example, rest or vacation).
 

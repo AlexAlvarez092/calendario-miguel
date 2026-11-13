@@ -1,6 +1,6 @@
 # ADR 0009: Push to GitHub with a deploy key
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

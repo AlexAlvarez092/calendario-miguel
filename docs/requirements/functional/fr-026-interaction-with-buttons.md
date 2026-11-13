@@ -1,7 +1,7 @@
 # FR-026: Interaction with buttons
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Miguel answers the bot with buttons wherever possible, instead of typing commands or values. The bot offers a menu (shown with `/start`) with the add and modify options ([FR-005](fr-005-add-event-command.md), [FR-007](fr-007-modify-event-command.md)); the commands remain as shortcuts. The bot asks for:
 

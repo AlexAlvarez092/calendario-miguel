@@ -1,6 +1,6 @@
 # CON-001: Run on the Raspberry Pi
 
-- **Status:** Proposed
+- **Status:** Accepted
 
 The Telegram bot must run on the Raspberry Pi `pi3`.
 

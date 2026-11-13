@@ -1,7 +1,7 @@
 # FR-015: Read only Miguel's rows
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The photo is a table with the schedule of several people. The bot always looks for the row(s) labeled "Miguel" (one per week block) and uses only those; the rows of other people are ignored.
 

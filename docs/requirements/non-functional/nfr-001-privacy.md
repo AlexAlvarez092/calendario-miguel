@@ -2,7 +2,7 @@
 
 - **Category:** Privacy
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 No access restriction on the calendar is required for now (see [FR-011](../functional/fr-011-subscription-url.md)). Restricting access is a possible future improvement.
 

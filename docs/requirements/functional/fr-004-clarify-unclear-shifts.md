@@ -1,7 +1,7 @@
 # FR-004: Clarify unclear shifts
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 If the bot cannot understand a shift, it asks Miguel to clarify it before generating any events. For each cell of Miguel's row, the bot obtains from the AI service the literal text of the cell, its interpretation and the annotations it ignored ([FR-016](fr-016-classify-each-day.md)), and checks the interpretation itself instead of trusting the AI service. The bot treats a cell as not understood when any of these is true:
 

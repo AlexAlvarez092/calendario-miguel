@@ -1,7 +1,7 @@
 # FR-007: Modify event command
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The bot provides a command to modify the event of a day (for example, when a colleague asks Miguel to swap a shift mid-month). The interaction is:
 

@@ -1,7 +1,7 @@
 # FR-010: Non-working day events are all-day
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Events for non-working days are all-day events.
 

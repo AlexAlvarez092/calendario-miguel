@@ -1,7 +1,7 @@
 # FR-001: Telegram bot interface
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Miguel interacts with the system through a Telegram bot.
 

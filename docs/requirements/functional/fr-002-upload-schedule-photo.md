@@ -1,7 +1,7 @@
 # FR-002: Upload the schedule photo
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Miguel can upload the photo of the schedule in his conversation with the bot.
 

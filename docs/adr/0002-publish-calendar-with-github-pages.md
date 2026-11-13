@@ -1,6 +1,6 @@
 # ADR 0002: Publish the calendar with GitHub Pages
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

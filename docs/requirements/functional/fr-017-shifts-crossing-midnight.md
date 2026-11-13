@@ -1,7 +1,7 @@
 # FR-017: Shifts that cross midnight
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 A shift that ends after midnight (for example `18-02`, or `16-00` ending at 00:00) is a single event that starts on the day of the shift and ends on the following day.
 

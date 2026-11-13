@@ -1,7 +1,7 @@
 # FR-016: Classify each day as shift or non-working day
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 For each day, the bot must clearly identify whether Miguel is working (and the start and end time of the shift) or not working. Annotations next to or instead of the schedule (for example `HT`, `debido`) are taken into account only if they are relevant to that distinction; otherwise the AI service reports them as ignored and they are ignored. The exception is `PEDIDO` next to a schedule: it takes precedence and the day is a non-working day of type Pedido, because the original shift was requested off.
 

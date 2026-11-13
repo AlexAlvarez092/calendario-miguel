@@ -1,6 +1,6 @@
 # ADR 0005: Keep secrets in an `.env` file
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

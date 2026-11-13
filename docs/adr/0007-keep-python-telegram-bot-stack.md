@@ -1,6 +1,6 @@
 # ADR 0007: Keep Python and python-telegram-bot for the bot
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

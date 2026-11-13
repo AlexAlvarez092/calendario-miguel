@@ -1,7 +1,7 @@
 # FR-020: Detect the month and year of the photo
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The bot reads the month and year of the first day of the photo (the table shows it, for example `nov-26`); the month of the following days is deduced from the day numbers, so a photo can cross from one month into the next and does not need to cover a whole month. If it cannot identify the month or the year, it asks Miguel to choose the month of the first day with buttons.
 

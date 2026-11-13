@@ -2,7 +2,7 @@
 
 - **Category:** Performance
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The bot responds to Miguel after he sends a photo in at most 6 minutes.
 

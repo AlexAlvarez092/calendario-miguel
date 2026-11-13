@@ -1,6 +1,6 @@
 # ADR 0011: Test photo reading with a synthetic photo
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

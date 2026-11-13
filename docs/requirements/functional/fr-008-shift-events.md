@@ -1,7 +1,7 @@
 # FR-008: Shift events
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Each work shift is a calendar event with a date, a start time and an end time.
 

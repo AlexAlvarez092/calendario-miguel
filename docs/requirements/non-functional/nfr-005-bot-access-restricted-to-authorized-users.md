@@ -2,7 +2,7 @@
 
 - **Category:** Security
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 Only the authorized users can use the Telegram bot, and therefore create or modify calendar events. The authorized users are Miguel and the developer. Each of them has his own interaction in progress ([FR-025](../functional/fr-025-pending-interactions.md)).
 

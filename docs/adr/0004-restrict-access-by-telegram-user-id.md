@@ -1,6 +1,6 @@
 # ADR 0004: Restrict access by Telegram user ID
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

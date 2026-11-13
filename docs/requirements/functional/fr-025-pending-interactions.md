@@ -1,7 +1,7 @@
 # FR-025: Pending interactions
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 An interaction in progress (a photo being processed, a clarification, a command waiting for an answer, or a summary waiting for confirmation) is kept only in memory and does not expire. Only one interaction can be in progress at a time for each authorized user: when a user starts a new one by sending a photo or a command, the one in progress of that user is cancelled, and any late result of the cancelled interaction is discarded. A response from Miguel (for example pressing a confirmation button) belongs to the interaction it was shown for; a response to a cancelled interaction is ignored and can never confirm or answer the new one. Miguel can also cancel it at any time with the `/cancel` command or the Cancel button of the bot's messages. If the bot receives an answer that is not valid for the step in progress, it asks again. If the bot restarts, the interaction is lost and Miguel starts again; nothing is applied without his confirmation ([FR-022](fr-022-confirm-before-publishing.md)).
 

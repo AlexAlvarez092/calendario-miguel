@@ -1,7 +1,7 @@
 # FR-011: Subscription URL
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The calendar is published at a URL that anyone with the link can subscribe to from a calendar app.
 

@@ -1,7 +1,7 @@
 # FR-019: Resending a photo updates the calendar
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 If Miguel sends a photo that covers days that were already processed, the bot updates the calendar only where needed: it creates the events that are missing and updates the events that changed (for example, when the shift of a day that already had an event is different). Existing events are handled as defined in [FR-024](fr-024-one-event-per-day.md).
 

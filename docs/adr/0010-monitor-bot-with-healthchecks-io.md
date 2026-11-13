@@ -1,6 +1,6 @@
 # ADR 0010: Monitor the bot with healthchecks.io
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context

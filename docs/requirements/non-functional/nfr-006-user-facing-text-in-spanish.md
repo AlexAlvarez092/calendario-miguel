@@ -2,7 +2,7 @@
 
 - **Category:** Usability
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 All text that Miguel and his friends see is in Spanish: the messages the bot sends to Miguel and the titles of the calendar events. This is the exception allowed by the [language rule](../../../.github/instructions/language.instructions.md); the code, comments and documentation stay in English.
 

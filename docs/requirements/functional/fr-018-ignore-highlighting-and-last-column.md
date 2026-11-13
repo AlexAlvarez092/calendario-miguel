@@ -1,7 +1,7 @@
 # FR-018: Ignore cell highlighting and the last column
 
 - **Priority:** Must
-- **Status:** Proposed
+- **Status:** Accepted
 
 The yellow highlighting of cells and the last column of the table are irrelevant and must be ignored by the bot.
 

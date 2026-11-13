@@ -1,6 +1,6 @@
 # ADR 0003: Store events in `data/events.json`
 
-- **Status:** Proposed
+- **Status:** Accepted
 - **Date:** 2026-11-13
 
 ## Context
