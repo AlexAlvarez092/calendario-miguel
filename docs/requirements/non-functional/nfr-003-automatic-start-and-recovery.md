@@ -9,4 +9,4 @@ The bot starts automatically when the Raspberry Pi starts and restarts automatic
 ## Acceptance criteria
 
 - Given the Raspberry Pi is powered on or rebooted, When the system finishes starting, Then the bot is running and answers Miguel without anyone starting it manually.
-- Given the bot process stops because of an error (for example it is killed or crashes), When it stops, Then it is restarted automatically and answers Miguel again.
+- Given the bot process stops because of an error (it is killed with `SIGKILL` or crashes with an unhandled exception), When it stops, Then it is restarted automatically and answers Miguel again.

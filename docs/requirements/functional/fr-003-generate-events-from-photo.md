@@ -7,4 +7,4 @@ From the photo, the bot extracts the shifts and generates the calendar events wi
 
 ## Acceptance criteria
 
-- Given a photo of the monthly schedule where all of Miguel's cells are readable, When the bot processes it, Then it generates the events of all the days of the month without any manual step by Miguel other than confirming ([FR-022](fr-022-confirm-before-publishing.md)).
+- Given a photo of the monthly schedule where the bot understands all of Miguel's cells (none needs clarification according to [FR-004](fr-004-clarify-unclear-shifts.md)), When the bot processes it, Then it generates the events of all the days of the month without any manual step by Miguel other than confirming ([FR-022](fr-022-confirm-before-publishing.md)).
