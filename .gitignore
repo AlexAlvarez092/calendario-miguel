@@ -11,5 +11,10 @@ public/calendar.ics
 .env.local
 .env.*.local
 
+# Python
+.venv/
+__pycache__/
+.pytest_cache/
+
 # OS/editor noise
 .DS_Store
