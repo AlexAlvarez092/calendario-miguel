@@ -1,4 +1,4 @@
-"""Readings of the schedule photo, their validation (FR-004) and input parsing."""
+"""Readings of the schedule photo and their validation (FR-004)."""
 from __future__ import annotations
 
 import calendar
@@ -46,49 +46,8 @@ def parse_time(text: str) -> Optional[time]:
     return _make_time(match.group(1), match.group(2)) if match else None
 
 
-def parse_shift_range(text: str) -> Optional[Tuple[time, time]]:
-    """Parse `10-18` or `18:00-02:00` (the whole text must be the range)."""
-    match = _RANGE_RE.fullmatch(text.strip())
-    if not match:
-        return None
-    start = _make_time(match.group(1), match.group(2))
-    end = _make_time(match.group(3), match.group(4))
-    if start is None or end is None or start == end:
-        return None
-    return start, end
-
-
-def parse_date(text: str) -> Optional[date]:
-    match = re.fullmatch(r"(\d{1,2})/(\d{1,2})/(\d{4})", text.strip())
-    if not match:
-        return None
-    try:
-        return date(int(match.group(3)), int(match.group(2)), int(match.group(1)))
-    except ValueError:
-        return None
-
-
-def parse_month(text: str) -> Optional[Tuple[int, int]]:
-    """Parse `mm/yyyy` into (year, month)."""
-    match = re.fullmatch(r"(\d{1,2})/(\d{4})", text.strip())
-    if not match or not 1 <= int(match.group(1)) <= 12:
-        return None
-    return int(match.group(2)), int(match.group(1))
-
-
 def normalize_label(text: str) -> str:
     return text.strip().capitalize()
-
-
-def parse_day_answer(text: str, day: date) -> Optional[Entry]:
-    """Parse Miguel's answer to a clarification: a time range or a known non-working type."""
-    shift = parse_shift_range(text)
-    if shift:
-        return Entry.shift(day, shift[0], shift[1])
-    for known in NON_WORKING_TYPES:
-        if text.strip().casefold() == known.casefold():
-            return Entry.off(day, known)
-    return None
 
 
 def _leftover(raw: str, explained: List[str]) -> str:
@@ -123,39 +82,57 @@ def is_understood(reading: DayReading) -> bool:
 
 @dataclass
 class Analysis:
-    understood: Dict[int, DayReading]
-    unclear: List[int]
-    missing: List[int]
-    outside: List[int]
+    understood: Dict[date, DayReading]
+    unclear: List[date]
+    missing: List[date]
+    error: Optional[str] = None
+    raw: Dict[date, str] = field(default_factory=dict)  # literal text of the unclear days
+
+
+def _days_in_month(year: int, month: int) -> int:
+    return calendar.monthrange(year, month)[1]
+
+
+def _next_month(year: int, month: int) -> Tuple[int, int]:
+    return (year + 1, 1) if month == 12 else (year, month + 1)
 
 
 def analyze(days: List[DayReading], year: int, month: int) -> Analysis:
-    """Classify the days read from the photo for the given month."""
-    last_day = calendar.monthrange(year, month)[1]
-    grouped: Dict[int, List[DayReading]] = {}
+    """Give a date to each day read and classify it. The photo covers consecutive days
+    in reading order, starting in the given month; the month changes when the day number
+    goes down after the end of a month. The photo is not assumed to cover a whole month."""
+    grouped: Dict[date, List[DayReading]] = {}
+    missing: List[date] = []
+    previous: Optional[int] = None
     for reading in days:
-        grouped.setdefault(reading.day, []).append(reading)
+        last = _days_in_month(year, month)
+        if previous is not None and reading.day < previous:
+            if previous < 28 or reading.day > 7:
+                return Analysis({}, [], [], f"El día {reading.day} aparece después del {previous}.")
+            missing += [date(year, month, d) for d in range(previous + 1, last + 1)]
+            year, month = _next_month(year, month)
+            previous = 0
+            last = _days_in_month(year, month)
+        if not 1 <= reading.day <= last:
+            return Analysis({}, [], [], f"El día {reading.day} no existe en {month:02d}/{year}.")
+        if previous is not None and reading.day > previous + 1:
+            missing += [date(year, month, d) for d in range(previous + 1, reading.day)]
+        grouped.setdefault(date(year, month, reading.day), []).append(reading)
+        previous = reading.day
 
-    outside = sorted(d for d in grouped if not 1 <= d <= last_day)
-    inside = sorted(d for d in grouped if 1 <= d <= last_day)
-
-    understood: Dict[int, DayReading] = {}
-    unclear: List[int] = []
-    for day in inside:
-        readings = grouped[day]
+    understood: Dict[date, DayReading] = {}
+    unclear: List[date] = []
+    raw: Dict[date, str] = {}
+    for day, readings in sorted(grouped.items()):
         if len(readings) == 1 and is_understood(readings[0]):
             understood[day] = readings[0]
         else:
             unclear.append(day)
-
-    missing: List[int] = []
-    if inside:
-        missing = [d for d in range(inside[0], inside[-1] + 1) if d not in grouped]
-    return Analysis(understood, unclear, missing, outside)
+            raw[day] = " / ".join(r.raw_text for r in readings)
+    return Analysis(understood, unclear, sorted(missing), raw=raw)
 
 
-def to_entry(reading: DayReading, year: int, month: int) -> Entry:
-    day = date(year, month, reading.day)
+def to_entry(reading: DayReading, day: date) -> Entry:
     if reading.kind == "shift":
         return Entry.shift(day, reading.start, reading.end)
     return Entry.off(day, normalize_label(reading.off_type or ""))

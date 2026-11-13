@@ -24,7 +24,8 @@ The table has one block per week, and each block has one row per person with one
 Rules:
 - Use ONLY the rows labeled "MIGUEL" (one per week block). Ignore every other person.
 - Ignore the yellow highlighting of cells and the last column of each block.
-- Read the month and year from the table header (for example "nov-26" is November 2026). If you cannot read them, use null.
+- The photo can cover any period (a few weeks, or part of a month, possibly crossing into the next month). Return the days in the order they appear, week block after week block.
+- Read the month and year of the FIRST day you return from the table header (for example "nov-26" is November 2026). If you cannot read them, use null.
 - Return one item per day column of Miguel's rows, using the day-of-month number printed in the column header.
 - Never guess. If a cell is hard to read or you are not sure, set "uncertain" to true.
 

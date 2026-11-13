@@ -4,12 +4,12 @@
 
 Automate two things for a childhood friend (Miguel) who works in shifts:
 
-1. Generating calendar events from his monthly shift schedule.
+1. Generating calendar events from his printed shift schedule.
 2. Sharing those events with his friends.
 
 ## Current situation
 
-Every month Miguel receives, via WhatsApp, a photo of a printed calendar with his shifts for the following month. He manually creates each shift as an event in his calendar app. He also shares the photo with some friends so they know when he is available to make plans.
+Periodically Miguel receives, via WhatsApp, a photo of a printed calendar with his shifts for the following weeks. It can cover a whole month or only part of it, and it can cross from one month into the next. He manually creates each shift as an event in his calendar app. He also shares the photo with some friends so they know when he is available to make plans.
 
 ## Scope
 
@@ -26,7 +26,7 @@ Every month Miguel receives, via WhatsApp, a photo of a printed calendar with hi
 
 | Role | Description |
 |------|-------------|
-| Miguel | Works in shifts. Receives the monthly printed schedule and wants his shifts as calendar events. |
+| Miguel | Works in shifts. Receives the printed schedule and wants his shifts as calendar events. |
 | Friends | Receive Miguel's schedule to know when to make plans with him. |
 
 ## Glossary

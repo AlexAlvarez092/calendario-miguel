@@ -3,7 +3,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-The bot provides a command to add the event of a day (for example, a day of a future month whose schedule has not been received, but whose shift Miguel already knows). It is expected to be rarely used. If the day already has an event, the bot asks Miguel whether he wants to replace it. If the day is not a shift, the bot asks for the type of non-working day, offering buttons (rest, vacation, holiday, compensatory) or free text ([FR-009](fr-009-non-working-day-events.md)).
+The bot provides a command to add the event of a day (for example, a day of a future month whose schedule has not been received, but whose shift Miguel already knows). It is expected to be rarely used. Miguel starts it from the bot's menu or with the `/add` command, and answers with buttons ([FR-026](fr-026-interaction-with-buttons.md)). If the day already has an event, the bot asks Miguel whether he wants to replace it. If the day is not a shift, the bot asks for the type of non-working day, offering buttons (rest, vacation, holiday, compensatory) or free text ([FR-009](fr-009-non-working-day-events.md)).
 
 ## Acceptance criteria
 

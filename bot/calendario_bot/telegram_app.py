@@ -27,9 +27,11 @@ logger = logging.getLogger(__name__)
 
 
 def _markup(reply: Reply) -> Optional[InlineKeyboardMarkup]:
-    if not reply.buttons:
+    if not reply.rows:
         return None
-    return InlineKeyboardMarkup([[InlineKeyboardButton(label, callback_data=data)] for label, data in reply.buttons])
+    return InlineKeyboardMarkup(
+        [[InlineKeyboardButton(label, callback_data=data) for label, data in row] for row in reply.rows]
+    )
 
 
 async def _send(update: Update, replies: List[Reply]) -> None:
@@ -50,9 +52,7 @@ def build_application(settings: Settings) -> Application:
     allowed = filters.User(user_id=settings.allowed_user_id)
 
     async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        await update.effective_chat.send_message(
-            "Hola. Envíame la foto del cuadrante del mes, o usa /add o /modify para un día concreto. /cancel cancela lo que esté en curso."
-        )
+        await _send(update, [flow.menu()])
 
     async def health(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.effective_chat.send_message("Estoy funcionando.")
@@ -83,6 +83,8 @@ def build_application(settings: Settings) -> Application:
 
     async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         query = update.callback_query
+        if update.effective_user.id != settings.allowed_user_id:
+            return  # ignore other users silently (NFR-005)
         await query.answer()
         await _send(update, await flow.handle_callback(query.data))
 
@@ -111,5 +113,5 @@ def build_application(settings: Settings) -> Application:
     app.add_handler(CommandHandler("modify", command("modify"), filters=allowed))
     app.add_handler(MessageHandler(allowed & (filters.PHOTO | filters.Document.IMAGE), photo))
     app.add_handler(MessageHandler(allowed & filters.TEXT & ~filters.COMMAND, text))
-    app.add_handler(CallbackQueryHandler(callback, pattern=r"^\d+:", block=False))
+    app.add_handler(CallbackQueryHandler(callback, pattern=r"^(\d+|m):", block=False))
     return app

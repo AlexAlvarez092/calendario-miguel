@@ -2,7 +2,7 @@ import json
 from datetime import date, time
 
 from calendario_bot.events import Entry, EventStore
-from calendario_bot.schedule import DayReading, analyze, is_understood, parse_day_answer, parse_month
+from calendario_bot.schedule import DayReading, analyze, is_understood
 
 
 def shift(day, raw, start, end, ignored=(), uncertain=False):
@@ -60,6 +60,10 @@ def test_non_working_understood():
     assert not is_understood(DayReading(1, "DESCANSO extra", "non_working", off_type="Descanso"))
 
 
+def d(day, month=11):
+    return date(2026, month, day)
+
+
 def test_analyze_classifies_days():
     days = [
         shift(2, "10-18", time(10), time(18)),
@@ -67,18 +71,36 @@ def test_analyze_classifies_days():
         shift(5, "10-18", time(10), time(18)),
         shift(5, "10-18", time(10), time(18)),  # duplicate
         shift(7, "10-18", time(10), time(18)),
-        shift(31, "10-18", time(10), time(18)),  # November has 30 days
     ]
     result = analyze(days, 2026, 11)
-    assert sorted(result.understood) == [2, 7]
-    assert result.unclear == [3, 5]
-    assert result.missing == [4, 6]
-    assert result.outside == [31]
+    assert sorted(result.understood) == [d(2), d(7)]
+    assert result.unclear == [d(3), d(5)]
+    assert result.missing == [d(4), d(6)]
+    assert result.raw[d(3)] == "???"
 
 
-def test_parse_answers():
-    assert parse_month("11/2026") == (2026, 11)
-    assert parse_month("13/2026") is None
-    assert parse_day_answer("descanso", date(2026, 11, 1)) == Entry.off(date(2026, 11, 1), "Descanso")
-    assert parse_day_answer("10-18", date(2026, 11, 1)) == Entry.shift(date(2026, 11, 1), time(10), time(18))
-    assert parse_day_answer("hola", date(2026, 11, 1)) is None
+def test_analyze_does_not_assume_whole_month():
+    days = [shift(n, "10-18", time(10), time(18)) for n in range(12, 16)]
+    result = analyze(days, 2026, 10)
+    assert sorted(result.understood) == [d(12, 10), d(13, 10), d(14, 10), d(15, 10)]
+    assert result.missing == [] and result.error is None
+
+
+def test_analyze_crosses_month_and_reports_gaps():
+    days = [shift(n, "10-18", time(10), time(18)) for n in (29, 30, 1, 3)]
+    result = analyze(days, 2026, 11)
+    assert sorted(result.understood) == [d(29), d(30), d(1, 12), d(3, 12)]
+    assert result.missing == [d(2, 12)]
+    last_day_missing = analyze([shift(29, "10-18", time(10), time(18)), shift(1, "10-18", time(10), time(18))], 2026, 11)
+    assert last_day_missing.missing == [d(30)]
+
+
+def test_analyze_year_rollover():
+    days = [shift(n, "10-18", time(10), time(18)) for n in (30, 31, 1)]
+    result = analyze(days, 2026, 12)
+    assert date(2027, 1, 1) in result.understood
+
+
+def test_analyze_incoherent_order_is_an_error():
+    assert analyze([shift(10, "10-18", time(10), time(18)), shift(5, "10-18", time(10), time(18))], 2026, 11).error
+    assert analyze([shift(31, "10-18", time(10), time(18))], 2026, 11).error  # November has 30 days
