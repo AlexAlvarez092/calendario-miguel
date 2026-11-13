@@ -3,7 +3,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-All shift times are in the `Europe/Madrid` time zone.
+All shift times are in the `Europe/Madrid` time zone. Local times that do not exist or happen twice on a clock change night are not handled specially: the time zone library resolves them.
 
 ## Acceptance criteria
 

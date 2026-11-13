@@ -11,6 +11,10 @@ The bot needs a single source of truth for events from which the `.ics` file is 
 
 Events are stored in `data/events.json`, versioned in the repository.
 
+## Alternatives considered
+
+- **SQLite or a JSON file only on the Raspberry Pi:** the data would not be versioned and would be lost if the Pi's storage fails, and the generator in GitHub Actions could not read it.
+
 ## Consequences
 
 - Every change is tracked in the Git history.

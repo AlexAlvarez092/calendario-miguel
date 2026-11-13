@@ -4,7 +4,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-No access restriction on the calendar is required for now (see [FR-011](../functional/fr-011-subscription-url.md)). The calendar is currently published through GitHub Pages from a public repository. Restricting access is a possible future improvement.
+No access restriction on the calendar is required for now (see [FR-011](../functional/fr-011-subscription-url.md)). Restricting access is a possible future improvement.
 
 ## Acceptance criteria
 
