@@ -1,7 +1,7 @@
 {
   "name": "calendario-miguel",
   "version": "0.1.0",
-  "description": "Calendario ICS personal al que suscribirse, generado desde data/events.json.",
+  "description": "Generates the ICS calendar of Miguel's shifts from data/events.json, which the Telegram bot in bot/ keeps up to date.",
   "scripts": {
     "test": "vitest run",
     "build": "tsc -p tsconfig.json",
