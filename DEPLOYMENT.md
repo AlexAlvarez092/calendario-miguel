@@ -69,11 +69,11 @@ chmod 600 ~/calendario-miguel/bot/.env
 
 ## 5. Run it as a service
 
-The bot runs as a systemd service that restarts it on failure ([ADR 0006](docs/adr/0006-run-bot-as-systemd-service.md)). Create `/etc/systemd/system/telegram-bot.service` (needs `sudo`), replacing `<user>`:
+The bot runs as a systemd service that restarts it on failure ([ADR 0006](docs/adr/0006-run-bot-as-systemd-service.md)). Create `/etc/systemd/system/calendar-bot.service` (needs `sudo`), replacing `<user>`:
 
 ```ini
 [Unit]
-Description=Telegram Bot
+Description=Miguel Calendar Bot
 After=network-online.target
 Wants=network-online.target
 
@@ -91,7 +91,7 @@ WantedBy=multi-user.target
 
 ```sh
 sudo systemctl daemon-reload
-sudo systemctl enable --now telegram-bot
+sudo systemctl enable --now calendar-bot
 ```
 
 The bot loads `.env` itself, so the unit does not need `EnvironmentFile`.
@@ -99,8 +99,8 @@ The bot loads `.env` itself, so the unit does not need `EnvironmentFile`.
 ## 6. Verify
 
 ```sh
-systemctl is-active telegram-bot
-journalctl -u telegram-bot -n 20 --no-pager
+systemctl is-active calendar-bot
+journalctl -u calendar-bot -n 20 --no-pager
 ```
 
 The log must end with `Application started`. Then, from the authorized Telegram account, send `/start`: the bot answers with its menu. Messages from any other account are ignored.
@@ -110,25 +110,11 @@ The log must end with `Application started`. Then, from the authorized Telegram 
 ```sh
 cd ~/calendario-miguel && git pull --ff-only
 bot/.venv/bin/pip install -r bot/requirements.txt
-sudo systemctl restart telegram-bot
+sudo systemctl restart calendar-bot
 ```
-
-## Current deployment
-
-The Pi already had an older bot, `~/telegram-bot/bot.py`, running under the `telegram-bot` service with the unit pointing at it. Since the unit could not be edited without `sudo`, that file was replaced by a small launcher that starts this bot, and the service was restarted by stopping its process so that systemd relaunched it:
-
-```python
-import os
-
-BOT_DIR = "/home/alealvar/calendario-miguel/bot"
-os.chdir(BOT_DIR)
-os.execv(f"{BOT_DIR}/.venv/bin/python", [f"{BOT_DIR}/.venv/bin/python", "-m", "calendar_bot"])
-```
-
-To clean it up, apply the unit of step 5 and remove `~/telegram-bot` (its `bot.py.bak` is the original bot).
 
 ## Troubleshooting
 
-- **The bot does not answer:** check `journalctl -u telegram-bot`. A `NetworkError` after a reboot usually means the Pi had no connection yet; `Restart=on-failure` recovers it.
+- **The bot does not answer:** check `journalctl -u calendar-bot`. A `NetworkError` after a reboot usually means the Pi had no connection yet; `Restart=on-failure` recovers it.
 - **Changes are not published:** the bot keeps the commits locally and retries every minute. If the repository has a conflict, it notifies Miguel once; resolve it by hand in `~/calendario-miguel` (`git status`, then `git pull --rebase` and `git push`).
 - **No email when the bot is down:** check that `HEALTHCHECK_URL` is set and that the check in healthchecks.io has the email integration.
