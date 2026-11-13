@@ -4,9 +4,9 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-The bot starts automatically when the Raspberry Pi starts and restarts automatically if it stops unexpectedly.
+The bot starts automatically when the Raspberry Pi starts and restarts automatically if it stops unexpectedly because of an error. The bot is not expected to exit without an error on its own, so stopping it deliberately (for example with `systemctl stop`) does not restart it.
 
 ## Acceptance criteria
 
 - Given the Raspberry Pi is powered on or rebooted, When the system finishes starting, Then the bot is running and answers Miguel without anyone starting it manually.
-- Given the bot process stops unexpectedly, When it stops, Then it is restarted automatically and answers Miguel again.
+- Given the bot process stops because of an error (for example it is killed or crashes), When it stops, Then it is restarted automatically and answers Miguel again.

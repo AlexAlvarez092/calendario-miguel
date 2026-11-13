@@ -11,8 +11,8 @@ The bot publishes changes by pushing `data/events.json` to the repository from t
 
 - The bot authenticates with an **SSH deploy key with write access, scoped to this repository only**, stored on the Raspberry Pi.
 - A change confirmed by Miguel is saved as a local commit. Before each push the bot runs `git pull --rebase`.
-- If the pull or the push fails, the commit stays pending and the bot retries every minute. It also retries when the next change is confirmed.
-- If the rebase fails (a conflict), the bot notifies Miguel, because retrying cannot fix it.
+- If the pull or the push fails because of a connection problem, the commit stays pending and the bot retries every minute. It also retries when the next change is confirmed.
+- If the rebase fails (a conflict), retrying cannot fix it. The bot aborts the rebase, leaving the repository clean, keeps the commits pending, stops retrying, and notifies Miguel once. Changes confirmed afterwards are still saved as local commits. Someone must resolve the conflict by hand on the Raspberry Pi, after which publication resumes.
 - The bot does not check the result of the GitHub Actions workflow or of the Pages deployment. GitHub already emails the developer when a workflow fails.
 
 ## Alternatives considered
@@ -24,5 +24,4 @@ The bot publishes changes by pushing `data/events.json` to the repository from t
 
 - If the key leaks, the damage is limited to this repository.
 - A change can stay unpublished while there is no connection, and it is published once the connection returns.
-- The notification to Miguel is in Spanish ([NFR-006](../requirements/non-functional/nfr-006-user-facing-text-in-spanish.md)).
 - A failed rebase needs manual intervention on the Raspberry Pi.

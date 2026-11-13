@@ -9,7 +9,7 @@
 
 ## Decision
 
-The bot sends a periodic ping to a **healthchecks.io** check, configured to send an email to the developer when no ping arrives for 15 minutes.
+The bot sends a ping every 5 minutes to a **healthchecks.io** check, configured to send an email to the developer when no ping arrives for 15 minutes.
 
 ## Consequences
 

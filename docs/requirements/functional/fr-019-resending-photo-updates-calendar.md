@@ -3,7 +3,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-If Miguel sends a photo of a month that was already processed, the bot updates the calendar only where needed: it creates the events that are missing and updates the events that changed (for example, when the shift of a day that already had an event is different). Events are never deleted ([FR-024](fr-024-one-event-per-day.md)).
+If Miguel sends a photo of a month that was already processed, the bot updates the calendar only where needed: it creates the events that are missing and updates the events that changed (for example, when the shift of a day that already had an event is different). Existing events are handled as defined in [FR-024](fr-024-one-event-per-day.md).
 
 ## Acceptance criteria
 

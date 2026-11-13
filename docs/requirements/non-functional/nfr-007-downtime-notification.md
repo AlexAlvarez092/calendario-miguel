@@ -4,7 +4,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-The developer is notified by email when the bot has been down for 15 minutes or more, so that downtime that automatic recovery ([NFR-003](nfr-003-automatic-start-and-recovery.md)) does not fix does not go unnoticed.
+The developer is notified by email when the bot has stopped sending its periodic signal (a ping every 5 minutes, [ADR 0010](../../adr/0010-monitor-bot-with-healthchecks-io.md)) for 15 minutes, so that downtime that automatic recovery ([NFR-003](nfr-003-automatic-start-and-recovery.md)) does not fix does not go unnoticed. The bot has therefore been down between 10 and 15 minutes when the email is sent.
 
 ## Acceptance criteria
 

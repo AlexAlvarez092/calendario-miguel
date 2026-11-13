@@ -3,7 +3,7 @@
 - **Priority:** Must
 - **Status:** Proposed
 
-For each day, the bot must clearly identify whether Miguel is working (and the start and end time of the shift) or not working. Annotations next to or instead of the schedule (for example `PEDIDO`, `HT`, `debido`) are taken into account only if they are relevant to that distinction; otherwise they are ignored.
+For each day, the bot must clearly identify whether Miguel is working (and the start and end time of the shift) or not working. Annotations next to or instead of the schedule (for example `PEDIDO`, `HT`, `debido`) are taken into account only if they are relevant to that distinction; otherwise the AI service reports them as ignored and they are ignored.
 
 ## Acceptance criteria
 
