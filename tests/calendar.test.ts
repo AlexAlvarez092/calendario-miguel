@@ -20,6 +20,19 @@ describe("calendar", () => {
     expect(ics).toMatch(/DTSTART;VALUE=DATE:20261202/);
   });
 
+  it("generates a shift crossing midnight and an all-day non-working event", () => {
+    const events = parseEvents([
+      { id: "2026-12-01", title: "Turno 18:00-02:00", start: "2026-12-01T18:00", end: "2026-12-02T02:00" },
+      { id: "2026-12-02", title: "Descanso", start: "2026-12-02" },
+    ]);
+    const ics = generateCalendarIcs(events);
+
+    expect(ics).toContain("UID:2026-12-01");
+    expect(ics).toMatch(/DTEND;TZID=Europe\/Madrid:20261202T020000/);
+    expect(ics).toContain("SUMMARY:Descanso");
+    expect(ics).toMatch(/DTSTART;VALUE=DATE:20261202/);
+  });
+
   it("rejects duplicate ids and invalid dates", () => {
     const base = { id: "a", title: "T", start: "2026-12-01" };
     expect(() => parseEvents([base, base])).toThrow(/Duplicate/);

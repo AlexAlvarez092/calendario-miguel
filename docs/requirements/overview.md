@@ -15,7 +15,7 @@ Every month Miguel receives, via WhatsApp, a photo of a printed calendar with hi
 
 **In scope**
 
-- Everything described in [functional/](functional/).
+- Every active (not Dropped) requirement in [functional/](functional/).
 
 **Out of scope**
 

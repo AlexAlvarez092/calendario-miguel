@@ -4,7 +4,7 @@ import { DateTime } from "luxon";
 export const TIMEZONE = "Europe/Madrid";
 
 export interface EventInput {
-  /** Stable identifier; never derive it from the date/time. */
+  /** Stable identifier. It is the date of the event (`YYYY-MM-DD`), see ADR 0008. */
   id: string;
   title: string;
   /** `YYYY-MM-DD` for all-day events or `YYYY-MM-DDTHH:mm` (Europe/Madrid) for timed ones. */

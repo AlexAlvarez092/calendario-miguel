@@ -14,7 +14,7 @@ Use an AI service with vision support to read the photo, specifically the **Goog
 ## Alternatives considered
 
 - **Local OCR (for example Tesseract):** free and offline, but it returns text, not a grid, so detecting the calendar structure would be a significant engineering effort, and the Raspberry Pi is limited.
-- **Manual entry only:** discarded because [FR-003](../requirements/functional/fr-003-generate-events-from-photo.md) requires no further manual steps.
+- **Manual entry only:** discarded because [FR-003](../requirements/functional/fr-003-generate-events-from-photo.md) requires events to be generated from the photo.
 - **Groq (`qwen/qwen3.8-27b`):** free, but too inaccurate with a real photo (see test results). Discarded.
 - **Other free services** (Cloudflare Workers AI, OpenRouter `:free` models): not tested. Not usable under [CON-002](../requirements/constraints/con-002-everything-free.md): Mistral API, Hugging Face, Google Cloud Vision. GitHub Models has been retired.
 
