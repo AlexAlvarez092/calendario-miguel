@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import asyncio
 import logging
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
@@ -45,24 +45,32 @@ def build_application(settings: Settings) -> Application:
     holder: dict = {}
 
     async def notify(text: str) -> None:
-        await holder["app"].bot.send_message(settings.allowed_user_id, text)
+        for user_id in settings.allowed_user_ids:
+            await holder["app"].bot.send_message(user_id, text)
 
     publisher = Publisher(settings.repo_dir, notify=notify)
-    flow = Flow(store, publisher, reader)
-    allowed = filters.User(user_id=settings.allowed_user_id)
+    flows: Dict[int, Flow] = {}  # one interaction in progress per user (FR-025)
+
+    def flow_of(update: Update) -> Flow:
+        user_id = update.effective_user.id
+        if user_id not in flows:
+            flows[user_id] = Flow(store, publisher, reader)
+        return flows[user_id]
+
+    allowed = filters.User(user_id=list(settings.allowed_user_ids))
 
     async def start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        await _send(update, [flow.menu()])
+        await _send(update, [flow_of(update).menu()])
 
     async def health(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         await update.effective_chat.send_message("Estoy funcionando.")
 
     async def cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        await _send(update, [flow.cancel()])
+        await _send(update, [flow_of(update).cancel()])
 
     def command(kind: str):
         async def handler(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-            await _send(update, [flow.start_command(kind)])
+            await _send(update, [flow_of(update).start_command(kind)])
 
         return handler
 
@@ -76,17 +84,17 @@ def build_application(settings: Settings) -> Application:
             mime = message.document.mime_type
         image = bytes(await file.download_as_bytearray())
         await update.effective_chat.send_message("Foto recibida, la estoy leyendo…")
-        await _send(update, await flow.start_photo(image, mime))
+        await _send(update, await flow_of(update).start_photo(image, mime))
 
     async def text(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        await _send(update, await flow.handle_text(update.effective_message.text))
+        await _send(update, await flow_of(update).handle_text(update.effective_message.text))
 
     async def callback(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
         query = update.callback_query
-        if update.effective_user.id != settings.allowed_user_id:
+        if update.effective_user.id not in settings.allowed_user_ids:
             return  # ignore other users silently (NFR-005)
         await query.answer()
-        await _send(update, await flow.handle_callback(query.data))
+        await _send(update, await flow_of(update).handle_callback(query.data))
 
     async def post_init(app: Application) -> None:
         holder["app"] = app

@@ -7,7 +7,7 @@ The calendar itself (the `.ics`) is generated and published by the GitHub Action
 ## Requirements
 
 - A Raspberry Pi with Python 3.12 or later, `git` and an SSH connection to GitHub.
-- A Telegram bot token (from [@BotFather](https://t.me/BotFather)) and the Telegram user ID of the only person allowed to use it (Miguel).
+- A Telegram bot token (from [@BotFather](https://t.me/BotFather)) and the Telegram user IDs of the people allowed to use it (Miguel and the developer).
 - A Gemini API key with the free tier ([ADR 0001](docs/adr/0001-use-ai-to-read-schedule-photo.md)).
 - Optional: a [healthchecks.io](https://healthchecks.io) check that emails the developer when the bot stops (NFR-007).
 
@@ -56,7 +56,7 @@ Create `~/calendario-miguel/bot/.env` and restrict it to its owner ([ADR 0005](d
 
 ```sh
 TELEGRAM_BOT_TOKEN=<token from BotFather>
-TELEGRAM_ALLOWED_ID=<Telegram user ID of Miguel>
+TELEGRAM_ALLOWED_IDS=<Telegram user IDs allowed to use the bot, separated by commas>
 GEMINI_API_KEY=<Gemini API key>
 REPO_DIR=/home/<user>/calendario-miguel
 HEALTHCHECK_URL=<healthchecks.io ping URL, optional>

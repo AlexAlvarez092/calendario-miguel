@@ -28,6 +28,7 @@ Periodically Miguel receives, via WhatsApp, a photo of a printed calendar with h
 |------|-------------|
 | Miguel | Works in shifts. Receives the printed schedule and wants his shifts as calendar events. |
 | Friends | Receive Miguel's schedule to know when to make plans with him. |
+| Developer | Can also use the bot, for example to test it ([NFR-005](non-functional/nfr-005-bot-access-restricted-to-authorized-users.md)). |
 
 ## Glossary
 
