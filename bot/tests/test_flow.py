@@ -1,9 +1,9 @@
 from datetime import date, time
 
-from calendario_bot.events import Entry, EventStore
-from calendario_bot.flow import Flow
-from calendario_bot.gemini import ReadingError
-from calendario_bot.schedule import DayReading, ReadResult
+from calendar_bot.events import Entry, EventStore
+from calendar_bot.flow import Flow
+from calendar_bot.gemini import ReadingError
+from calendar_bot.schedule import DayReading, ReadResult
 
 TODAY = date(2026, 11, 13)
 

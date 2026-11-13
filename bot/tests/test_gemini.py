@@ -3,7 +3,7 @@ import json
 import httpx
 import pytest
 
-from calendario_bot.gemini import GeminiReader, ReadingError, parse_response
+from calendar_bot.gemini import GeminiReader, ReadingError, parse_response
 
 
 def ok_payload(days):

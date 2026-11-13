@@ -1,8 +1,8 @@
 import json
 from datetime import date, time
 
-from calendario_bot.events import Entry, EventStore
-from calendario_bot.schedule import DayReading, analyze, is_understood
+from calendar_bot.events import Entry, EventStore
+from calendar_bot.schedule import DayReading, analyze, is_understood
 
 
 def shift(day, raw, start, end, ignored=(), uncertain=False):

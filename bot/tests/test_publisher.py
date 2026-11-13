@@ -1,7 +1,7 @@
 import subprocess
 from pathlib import Path
 
-from calendario_bot.publisher import Publisher
+from calendar_bot.publisher import Publisher
 
 
 def git(cwd, *args):
