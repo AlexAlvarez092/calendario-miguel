@@ -1,5 +1,6 @@
 {
   "name": "calendario-miguel",
+  "author": "github.com/AlexAlvarez092"
   "version": "0.1.0",
   "description": "Generates the ICS calendar of Miguel's shifts from data/events.json, which the Telegram bot in bot/ keeps up to date.",
   "scripts": {
