@@ -25,7 +25,7 @@ Rules:
 - Use ONLY the rows labeled "MIGUEL" (one per week block). Ignore every other person.
 - Ignore the yellow highlighting of cells and the last column of each block.
 - The photo can cover any period (a few weeks, or part of a month, possibly crossing into the next month). Return the days in the order they appear, week block after week block.
-- Read the month and year of the FIRST day you return from the table header (for example "nov-26" is November 2026). If you cannot read them, use null.
+- Return the month and year of the FIRST day you return. The table header (for example "nov-26" is November 2026) can be misleading: it may show the month of a later part of the table, or the month the schedule was made, not the month of the first column. Use the header only as a hint, and make it consistent with the day numbers: if the first day is a high number (such as 28, 29, 30 or 31) and the days then continue with 1, 2, 3..., the first day belongs to the month BEFORE the month where the numbering restarts. For example, with a header "dic-26" and a table starting at 30, 1, 2, ..., the first day is 30 November 2026 and the following days are in December 2026, not 30 December. Also use the weekday names in the column headers (LUNES, MARTES...) to check the dates. If you cannot determine them, use null.
 - Return one item per day column of Miguel's rows, using the day-of-month number printed in the column header.
 - Never guess. If a cell is hard to read or you are not sure, set "uncertain" to true.
 
